@@ -11,8 +11,8 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
 function App() {
-  const [country, setCountry] = useState("India")
-  const [search, setSearch] = useState("India")
+  const [country, setCountry] = useState("India");
+  const [search, setSearch] = useState("India");
   const [news, setNews] = useState([]);
   console.log(news);
 
@@ -21,52 +21,53 @@ function App() {
       `https://newsapi.org/v2/top-headlines?q=${search}&apiKey=420f9e74420b43ff80404415a3240aa3`
     )
       .then((res) => res.json())
-      .then((data) => setNews([data.articles]));
+      .then((data) => setNews(data.articles));
   }, [search]);
 
-  function handleChange(e){
-    setCountry(e.target.value)
+  function handleChange(e) {
+    setCountry(e.target.value);
   }
 
-  function handleSearch(){
-    setSearch(country)
+  function handleSearch() {
+    setSearch(country);
   }
 
-
+  // if (news.length === 0) {
+  //   return <h1>No data found</h1>;
+  // }
 
   return (
     <div>
-      <Nav handleChange={handleChange}
-      handleSearch={handleSearch} /> 
-      <div>
-        {news.map((n) => (
-          <div className="content">
-            <Card sx={{ maxWidth: 345 }}>
-              <CardMedia
-                sx={{ height: 140 }}
-                image={n[0].urlToImage}
-                title="green iguana"
-              />
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                  {n[0].title}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {n[0].description}
-                </Typography>
-              </CardContent>
-              <CardActions>
-                <Button size="small">Share</Button>
-                <a
-                  href={n[0].url}
-                  target="_blank"
-                >
-                  Read More
-                </a>
-              </CardActions>
-            </Card>
+      <Nav handleChange={handleChange} handleSearch={handleSearch} />
+      {news.length === 0 && <h1>No data found</h1>}
 
-            <Card sx={{ maxWidth: 345 }}>
+      <div className="content">
+        {news.length > 0 &&
+          news.map((n) => (
+            <div>
+              <Card sx={{ maxWidth: 345, height: 400 }}>
+                <CardMedia
+                  sx={{ height: 140 }}
+                  image={n.urlToImage}
+                  title="green iguana"
+                />
+                <CardContent>
+                  <Typography gutterBottom variant="h5" component="div">
+                    {n.title}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    {n.description}
+                  </Typography>
+                </CardContent>
+                <CardActions>
+                  <Button size="small">Share</Button>
+                  <a href={n.url} target="_blank">
+                    Read More
+                  </a>
+                </CardActions>
+              </Card>
+
+              {/* <Card sx={{ maxWidth: 345 }}>
               <CardMedia
                 sx={{ height: 140 }}
                 image={n[1].urlToImage}
@@ -240,8 +241,8 @@ function App() {
                   Read More
                 </a>
               </CardActions>
-            </Card>
-{/* 
+            </Card> */}
+              {/* 
             <Card sx={{ maxWidth: 345 }}>
               <CardMedia
                 sx={{ height: 140 }}
@@ -316,17 +317,16 @@ function App() {
                 </a>
               </CardActions>
             </Card> */}
-          </div>
-          // <div className="card">
-          //   <img className="img" src={n.urlToImage} />
-          //   <h5>{n.title}</h5>
-          //   <p>{n.description}</p>
-          //   <button>Read More</button>
-          // </div>
-        ))} ;
+            </div>
+            // <div className="card">
+            //   <img className="img" src={n.urlToImage} />
+            //   <h5>{n.title}</h5>
+            //   <p>{n.description}</p>
+            //   <button>Read More</button>
+            // </div>
+          ))}
+        
       </div>
-      
- 
     </div>
   );
 }
