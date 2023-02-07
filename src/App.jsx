@@ -41,7 +41,7 @@ function App() {
         {news.length > 0 &&
           news.map((n) => (
             <div>
-              <Card sx={{ maxWidth: 345, height: 400  }}>
+              <Card sx={{ maxWidth: 345, height: 500  }}>
                 <CardMedia
                   sx={{ height: 140 }}
                   image={n.urlToImage}
